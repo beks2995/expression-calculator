@@ -1,21 +1,23 @@
-function eval() {
-	// Do not use eval!!!
-	return;
-}
-
 function expressionCalculator(expr) {
+	const bracketOpen = expr.match(/\(/g);
+	const bracketClose = expr.match(/\)/g);
+	let bracketOpenCount;
+	let bracketCloseCount;
 
-	const arrString = expr.trim().split(''),
-		bracketOne = arrString.filter(symbol => symbol === '(').length,
-		bracketTwo = arrString.filter(symbol => symbol ===')').length;
-
-	if (checkLeftBrackets !== checkRightBrackets) {
-		throw new Error ('ExpressionError: Brackets must be paired')
+	if (bracketOpen) {
+		bracketOpenCount = bracketOpen.length;
 	}
-	else {
+
+	if (bracketClose) {
+		bracketCloseCount = bracketClose.length;
+	}
+
+	if (bracketOpenCount !== bracketCloseCount) {
+		throw new Error('ExpressionError: Brackets must be paired')
+	} else {
 		let result = (new Function('return ' + expr))();
-		if(result === Infinity) {
-			throw new Error ('TypeError: Devision by zero.')
+		if (result === Infinity) {
+			throw new Error('TypeError: Devision by zero.')
 		}
 		return result
 	}
@@ -23,4 +25,4 @@ function expressionCalculator(expr) {
 
 module.exports = {
 	expressionCalculator
-}
+};
